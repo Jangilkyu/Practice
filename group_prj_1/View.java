@@ -23,6 +23,8 @@ public class View extends JDialog {
     private JLabel jlblUserSelect;
     private JTextArea jtaUserSelect;
 
+    private JButton jbtnReport;
+
     public View(InfoEvt ie) {
         super(ie.getInfo(), "a", true);
         this.ie = ie;
@@ -44,13 +46,14 @@ public class View extends JDialog {
         jtaUserSelect = new JTextArea();
         jlblUserSelect = new JLabel(String.valueOf(ie.getStartIdx()) + "~" + String.valueOf(ie.getEndIdx()) + "번째 라인에 해당 한느 정보 중 최다 사용키의 이름과 횟수");
 
+        jbtnReport = new JButton("Report");
     }//View
 
     public void getLogInfo() {
 
         jlblMaxkey.setFont(new Font(Font.DIALOG, Font.PLAIN, 18));
         jtaMakey.setFont(new Font(Font.DIALOG, Font.PLAIN, 16));
-        jtaMakey.setText(ie.getMaxKeyVal());
+        jtaMakey.setText(ie.getMaxKeyVal() + " " + ie.getMapUrl().get(ie.getMaxKeyVal()) + "회");
         jtaMakey.setEditable(false);
 
         jlblBrowser.setFont(new Font(Font.DIALOG, Font.PLAIN, 18));
@@ -70,40 +73,59 @@ public class View extends JDialog {
 
         jlblErrorKey.setFont(new Font(Font.DIALOG, Font.PLAIN, 18));
         jtaErrorKey.setFont(new Font(Font.DIALOG, Font.PLAIN, 16));
-        jtaErrorKey.setText(String.valueOf(ie.getMost200()));
+        jtaErrorKey.setText(String.valueOf(ie.getMost403()));
         jtaErrorKey.setEditable(false);
 
-        jlblUserSelect.setText(String.valueOf(ie.getStartIdx()) + "~" + String.valueOf(ie.getEndIdx()) + "번째 라인에 해당 한느 정보 중 최다 사용키의 이름과 횟수");
+        jlblUserSelect.setText(String.valueOf(ie.getStartIdx()) + "~" + String.valueOf(ie.getEndIdx()) + "번째 라인에 해당 하는 정보 중 최다 사용키의 이름과 횟수");
         jlblUserSelect.setFont(new Font(Font.DIALOG, Font.PLAIN, 18));
         jtaUserSelect.setFont(new Font(Font.DIALOG, Font.PLAIN, 16));
-        jtaUserSelect.setText(ie.getUserRate() + " " +ie.getMapUserResult().get(ie.getUserRate()));
+        jtaUserSelect.setText(ie.getUserRate() + " " + ie.getMapUserResult().get(ie.getUserRate()));
         jtaUserSelect.setEditable(false);
+
+        jbtnReport.setBackground(new Color(103, 153, 255));
+        jbtnReport.setFont(new Font(Font.DIALOG, Font.BOLD, 12));
+        jbtnReport.setForeground(new Color(255, 255, 255));
+
 
         setLayout(null);
 
         add(jlblMaxkey).setBounds(50, 30, 150, 30);
-        add(jtaMakey).setBounds(50, 60, 100, 30);
+        add(jtaMakey).setBounds(50, 60, 150, 30);
 
         add(jlblBrowser).setBounds(50, 100, 300, 30);
         add(jtaBrowser).setBounds(50, 130, 150, 120);
 
         add(jlblDate).setBounds(50, 260, 300, 30);
-        add(jtaDate).setBounds(50, 290, 100, 30);
+        add(jtaDate).setBounds(50, 290, 150, 30);
 
         add(jlblSuccFail).setBounds(50, 340, 550, 30);
         add(jtaSuccFail).setBounds(50, 370, 150, 60);
 
         add(jlblErrorKey).setBounds(600, 30, 300, 30);
-        add(jtaErrorKey).setBounds(600, 60, 100, 30);
+        add(jtaErrorKey).setBounds(600, 60, 150, 30);
 
         add(jlblUserSelect).setBounds(600, 100, 700, 30);
-        add(jtaUserSelect).setBounds(600, 130, 100, 30);
+        add(jtaUserSelect).setBounds(600, 130, 150, 30);
 
-        setBounds(100, 100, 1300, 500);
+        add(jbtnReport).setBounds(960, 400, 115, 40);
+
+        Report r = new Report(this);
+        jbtnReport.addActionListener(r);
+
+
+        setBounds(100, 100, 1200, 500);
         setVisible(true);
     }//getInfo
 
     public JTextArea getJtaMakey() {
         return jtaMakey;
+    }
+
+    public JButton getJbtnReport() {
+        return jbtnReport;
+    }
+
+    public InfoEvt getIe() {
+        return ie;
     }
 }//class

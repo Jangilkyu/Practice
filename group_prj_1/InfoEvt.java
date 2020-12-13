@@ -19,6 +19,7 @@ public class InfoEvt implements ActionListener {
     private FileInputStream fisUpload;
     private InputStreamReader isrUpload;
     private BufferedReader brUpload;
+    private StringBuilder sb;
     private boolean chckflag;
     private int lineCnt;
     private int startIdx;
@@ -99,6 +100,7 @@ public class InfoEvt implements ActionListener {
         startIdx = 0;
         endIdx = 0;
         Rate = "";
+        sb = null;
     }//reset
     //========================
 
@@ -263,11 +265,10 @@ public class InfoEvt implements ActionListener {
             }//end else
         }//end for
 
-        browserKeys = mapBrowser.keySet().toArray(new String[4]);
-        StringBuilder sb = new StringBuilder();
+        sb = new StringBuilder();
+
         for (String key : mapBrowser.keySet()) {
-            Rate = sb.append(key).append("- ").append(mapBrowser.get(key)).append("회 (")
-                    .append("1").append("%)\n").toString();
+            Rate = sb.append(key).append("- ").append(mapBrowser.get(key)).append("회 (").append(String.format("%.2f", ((mapBrowser.get(key) / (double) listBrowser.size())) * 100)).append("%)\n").toString();
         }
 
         return Rate;
@@ -282,19 +283,17 @@ public class InfoEvt implements ActionListener {
 //        StringBuilder sb = new StringBuilder();
 //
 //        for (int i = 0; i < listDate.size(); i++) {
-//            sb.append(listDate).substring(0,sb.indexOf(":"));
-//
+//            sb.append(listDate.get(i)).substring(0,sb.indexOf(":"));
+//            System.out.println(sb.toString());
 //            try {
 //                date = new SimpleDateFormat("yyyy-MM-dd HH").parse(sb.toString());
-//
-//                System.out.println(date);
-//
 //
 //            } catch (ParseException e) {
 ////                e.printStackTrace();
 //                System.out.println("에러");
 //            }
-
+//
+//
 //
 //            if (!(mapDate.containsKey(sb.toString()))) {
 //                mapDate.put(sb.toString(), 1);
@@ -327,6 +326,7 @@ public class InfoEvt implements ActionListener {
         most403 = mapResult.get("403");
         most404 = mapResult.get("404");
 
+        String a = (String.format("%.2f", (( most403/ (double) listBrowser.size()))));
     }//end for
 
 
@@ -338,7 +338,7 @@ public class InfoEvt implements ActionListener {
         for (int i = startIdx; i <= endIdx; i++) {
             str = listUrl.get(i);
             if (str.contains("key")) {
-               str = str.substring(str.indexOf("=") + 1, str.indexOf("&"));
+                str = str.substring(str.indexOf("=") + 1, str.indexOf("&"));
             }
             if (!mapUserResult.containsKey(str)) {
                 mapUserResult.put(str, 1);
@@ -416,6 +416,10 @@ public class InfoEvt implements ActionListener {
 
     public HashMap<String, Integer> getMapUserResult() {
         return mapUserResult;
+    }
+
+    public File getFile() {
+        return file;
     }
 }//class
 
