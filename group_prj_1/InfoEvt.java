@@ -28,6 +28,7 @@ public class InfoEvt implements ActionListener {
     private int most200;
     private int most404;
     private String Rate;
+    private String MostDate;
     private String UserRate;
     private HashMap<String, Integer> mapResult = new HashMap<>();
     private HashMap<String, Integer> mapUrl = new HashMap<>();
@@ -45,6 +46,15 @@ public class InfoEvt implements ActionListener {
     public InfoEvt(Info info) {
         this.info = info;
         v = new View(this);
+        mapResult = new HashMap<>();
+        mapUrl = new HashMap<>();
+        mapBrowser = new HashMap<>();
+        mapDate = new HashMap<>();
+        mapUserResult = new HashMap<>();
+        listResult = new ArrayList<>();
+        listUrl = new ArrayList<>();
+        listBrowser = new ArrayList<>();
+        listDate = new ArrayList<>();
     }//InfoEvt
 
     @Override
@@ -68,7 +78,7 @@ public class InfoEvt implements ActionListener {
                     setInfoList();
                     maxKeyVal = getMaxkeyUrl();
                     Rate = getBrowserInfo();
-                    getDateInfo();
+                    MostDate = getDateInfo();
                     getResponseResult();
                     UserRate = getUserResult();
                     v.getLogInfo();
@@ -82,6 +92,12 @@ public class InfoEvt implements ActionListener {
             }
         }//end if
 
+        int a = getInfo().getList().getAnchorSelectionIndex();
+
+        if(ae.getSource() == getInfo()){
+            System.out.println("a");
+        }
+
     }//actionPerformed
     //========================
 
@@ -92,6 +108,9 @@ public class InfoEvt implements ActionListener {
         mapBrowser.clear();
         listBrowser.clear();
         mapResult.clear();
+        listDate.clear();
+        mapDate.clear();
+
         v.getJtaMakey().setText("");
         browserKeys = null;
         most403 = 0;
@@ -175,7 +194,6 @@ public class InfoEvt implements ActionListener {
             lineCnt++;
         }//end while
 
-        System.out.println(lineCnt);
         brUpload.close();
 
     }//getPath
@@ -278,33 +296,28 @@ public class InfoEvt implements ActionListener {
     /**
      * 요청시간이 가장 많은 시간
      */
-    public void getDateInfo() {
+    public String getDateInfo() {
 
-//        StringBuilder sb = new StringBuilder();
-//
-//        for (int i = 0; i < listDate.size(); i++) {
-//            sb.append(listDate.get(i)).substring(0,sb.indexOf(":"));
-//            System.out.println(sb.toString());
-//            try {
-//                date = new SimpleDateFormat("yyyy-MM-dd HH").parse(sb.toString());
-//
-//            } catch (ParseException e) {
-////                e.printStackTrace();
-//                System.out.println("에러");
-//            }
-//
-//
-//
-//            if (!(mapDate.containsKey(sb.toString()))) {
-//                mapDate.put(sb.toString(), 1);
-//            } else {
-//                mapDate.put(sb.toString(), mapDate.get(sb.toString()) + 1);
-//            }//end else
-//        }//end for
-//
-//        for(String s : mapDate.keySet()){
-//            System.out.println(s + " " + mapDate.get(s));
-//        }
+        String tmpList = "";
+        for (int i = 0; i < listDate.size(); i++) {
+            tmpList = listDate.get(i).substring(listDate.get(i).indexOf(" "), listDate.get(i).indexOf(":"));
+            if (!(mapDate.containsKey(tmpList))) {
+                mapDate.put(tmpList, 1);
+            } else {
+                mapDate.put(tmpList, mapDate.get(tmpList) + 1);
+            }//end else
+        }//end for
+
+        String maxkey = "";
+
+        Collection<Integer> values = mapDate.values();//value값들 넣기
+        for (String key : mapDate.keySet()) {
+            if (Collections.max(values) == mapDate.get(key)) {
+                maxkey = key;
+            }
+        }
+
+        return maxkey;
 
     }//getDateInfo
 
@@ -326,7 +339,6 @@ public class InfoEvt implements ActionListener {
         most403 = mapResult.get("403");
         most404 = mapResult.get("404");
 
-        String a = (String.format("%.2f", (( most403/ (double) listBrowser.size()))));
     }//end for
 
 
@@ -421,7 +433,8 @@ public class InfoEvt implements ActionListener {
     public File getFile() {
         return file;
     }
+
+    public String getMostDate() {
+        return MostDate;
+    }
 }//class
-
-
-

@@ -26,7 +26,7 @@ public class View extends JDialog {
     private JButton jbtnReport;
 
     public View(InfoEvt ie) {
-        super(ie.getInfo(), "a", true);
+        super(ie.getInfo(), "분석 정보", true);
         this.ie = ie;
         jlblMaxkey = new JLabel("1. 최대사용키");
         jtaMakey = new JTextArea();
@@ -63,7 +63,7 @@ public class View extends JDialog {
 
         jlblDate.setFont(new Font(Font.DIALOG, Font.PLAIN, 18));
         jtaDate.setFont(new Font(Font.DIALOG, Font.PLAIN, 16));
-        jtaDate.setText("");
+        jtaDate.setText(ie.getMostDate()+ "시");
         jtaDate.setEditable(false);
 
         jlblSuccFail.setFont(new Font(Font.DIALOG, Font.PLAIN, 18));
@@ -73,7 +73,7 @@ public class View extends JDialog {
 
         jlblErrorKey.setFont(new Font(Font.DIALOG, Font.PLAIN, 18));
         jtaErrorKey.setFont(new Font(Font.DIALOG, Font.PLAIN, 16));
-        jtaErrorKey.setText(String.valueOf(ie.getMost403()));
+        jtaErrorKey.setText(String.valueOf(ie.getMost403())+"회");
         jtaErrorKey.setEditable(false);
 
         jlblUserSelect.setText(String.valueOf(ie.getStartIdx()) + "~" + String.valueOf(ie.getEndIdx()) + "번째 라인에 해당 하는 정보 중 최다 사용키의 이름과 횟수");
@@ -86,14 +86,13 @@ public class View extends JDialog {
         jbtnReport.setFont(new Font(Font.DIALOG, Font.BOLD, 12));
         jbtnReport.setForeground(new Color(255, 255, 255));
 
-
         setLayout(null);
 
         add(jlblMaxkey).setBounds(50, 30, 150, 30);
         add(jtaMakey).setBounds(50, 60, 150, 30);
 
         add(jlblBrowser).setBounds(50, 100, 300, 30);
-        add(jtaBrowser).setBounds(50, 130, 150, 120);
+        add(jtaBrowser).setBounds(50, 130, 170, 120);
 
         add(jlblDate).setBounds(50, 260, 300, 30);
         add(jtaDate).setBounds(50, 290, 150, 30);
@@ -115,6 +114,7 @@ public class View extends JDialog {
 
         setBounds(100, 100, 1200, 500);
         setVisible(true);
+
     }//getInfo
 
     public JTextArea getJtaMakey() {

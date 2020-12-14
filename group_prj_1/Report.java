@@ -54,7 +54,7 @@ public class Report implements ActionListener {
                    .append(view.getIe().getMaxKeyVal()).append(" / ").append(view.getIe().getMapUrl().get(view.getIe().getMaxKeyVal()))
                    .append("회").append("\n\n2. 서비스 수행 성공과 실패 횟수\n　　").append("성공 : ").append(view.getIe().getMost200()).append("회, 실패 : ")
                    .append(view.getIe().getMost404()).append("회").append("\n\n3. 브라우저별 접속 횟수, 비율\n").append(view.getIe().getRate())
-                   .append("\n\n4. 요청이 가장 많은 시간\n　　").append("수정 요청시간").append("시").append("\n\n5. 비정상적인 요청(403) 발생 횟수, 비율\n")
+                   .append("\n\n4. 요청이 가장 많은 시간\n　　").append(view.getIe().getMostDate()).append("시").append("\n\n5. 비정상적인 요청(403) 발생 횟수, 비율\n")
                    .append(view.getIe().getMost403()).append("회").append("수정(비율)").append("%)").append("\n\n6. 입력된 라인의 추가 정보\n　　")
                    .append(view.getIe().getUserRate()).append(" ").append(view.getIe().getMapUserResult().get(view.getIe().getUserRate())).toString();
 
