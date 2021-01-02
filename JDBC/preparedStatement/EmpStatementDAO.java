@@ -41,7 +41,7 @@ public class EmpStatementDAO {
 		return con;
 	}// getConnection
 
-	public EmpSelectVO select(String empNo) throws SQLException {
+	public EmpSelectVO selectEmp(String empNo) throws SQLException {
 		
 		Connection con = null;
 		PreparedStatement pstmt = null;
@@ -103,10 +103,64 @@ public class EmpStatementDAO {
 			}//end if
 		}//end finally
 
-	}// select
+	}// selectEmp
+	
+	public int UpdateEmp(int empno,EmpModifyVO eVO) throws SQLException {
+		int rowCnt = 0;
+		
+		Connection con = null;
+		PreparedStatement pstmt = null;
+		ResultSet rs = null;
+
+		//1.
+		//2.
+		try {
+			con = getConnection();
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}//end catch
+
+		
+		try {
+		// 3. 쿼리문 생성객체 얻기
+		StringBuilder updateEmpno = new StringBuilder();
+		
+		updateEmpno
+		.append("	UPDATE emp	")
+		.append("	SET  sal = ?, comm = ?	")
+		.append("	WHERE empno = ?	");
+
+		pstmt = con.prepareStatement(updateEmpno.toString());
+		
+		// 4. 바인드 변수에 값 넣기
+		pstmt.setInt(1, eVO.getSal());
+		pstmt.setInt(2, eVO.getComm());
+		pstmt.setInt(3, empno);
+
+		// 5.쿼리 수행 후결과 얻기
+		rowCnt = pstmt.executeUpdate();
+
+		}finally {
+			if(pstmt != null) {
+				pstmt.close();
+			}//end if
+			
+			if(rs != null) {
+				rs.close();
+			}//end if
+			
+			if(con != null) {
+				con.close();
+			}//end if
+		}//end finally
+
+		return rowCnt;
+		
+	}//UpdateEmp
+	
 	
 	public static void main(String[] args) throws SQLException {
-	 EmpStatementDAO.getInstance().select("7369");
+	 EmpStatementDAO.getInstance().UpdateEmp(9999,new EmpModifyVO(47,2));
 	}
 
 }// class

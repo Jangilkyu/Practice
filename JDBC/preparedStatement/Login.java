@@ -12,7 +12,8 @@ import javax.swing.JLabel;
 import javax.swing.JOptionPane;
 import javax.swing.JTextField;
 
-public class Login extends JFrame {
+@SuppressWarnings("serial")
+public class Login extends JFrame{
 
 	// 사원번호 검색
 	private JLabel jlblSchEmpno;
@@ -64,9 +65,13 @@ public class Login extends JFrame {
 	private JButton jbEmpUp;
 
 	Login l;
+	
+	JButton jbmodify;
+
 
 	public Login() {
 		super("인사 급여 관리");
+
 		l = this;
 		// 사원번호검색
 		jlblSchEmpno = new JLabel("사원 번호 검색");
@@ -116,6 +121,8 @@ public class Login extends JFrame {
 
 		// 값초기화
 		jbRset = new JButton("텍스트 초기화");
+		
+		jbmodify = new JButton("변경");
 
 		// 배치관리자 수동배치
 		setLayout(null);
@@ -171,16 +178,16 @@ public class Login extends JFrame {
 
 		// 텍스트 초기화
 		add(jbRset).setBounds(40, 400, 150, 35);
-		
+
 		// 사원 추가
-		add(jbEmpAdd).setBounds(210,400,150,35);
-		
+		add(jbEmpAdd).setBounds(210, 400, 150, 35);
+
 		// 사원 삭제
-		add(jbEmpDel).setBounds(380,400,150,35);
+		add(jbEmpDel).setBounds(380, 400, 150, 35);
 
 		// 사원 수정
-		add(jbEmpUp).setBounds(550,400,150,35);
-		
+		add(jbEmpUp).setBounds(550, 400, 150, 35);
+
 		Login.EmpEvt ee = this.new EmpEvt();
 		jtfSchEmpno.addActionListener(ee);
 		jbSchEmpno.addActionListener(ee);
@@ -188,37 +195,109 @@ public class Login extends JFrame {
 		setSize(750, 500);
 		setLocationRelativeTo(null);
 		setVisible(true);
-		
-		
+
+
+		// ========================================= 버튼 이벤트
+		// =========================================
 		// 텍스트 초기화
-		jbRset.addActionListener(new ActionListener() {		
+		jbRset.addActionListener(new ActionListener() {
 
 			@Override
 			public void actionPerformed(ActionEvent e) {
-				
-			int idx = JOptionPane.showConfirmDialog(l, "정말로 입력된 텍스트를 초기화 하겠습니까?","텍스트 초기화",JOptionPane.YES_NO_OPTION);
-			
-				switch(idx) {
-					case JOptionPane.YES_OPTION: {
-						jtfSchEmpno.setText("");
-						jtfEmpno.setText("");
-						jtfName.setText("");
-						jtfJob.setText("");
-						jtfMgr.setText("");
-						jtfHiredate.setText("");
-						jtfSal.setText("");
-						jtfComm.setText("");
-						jtfDeptno.setText("");
-					}break;
-					case JOptionPane.NO_OPTION : break; 
-				}//end switch
+
+				int idx = JOptionPane.showConfirmDialog(l, "정말로 입력된 텍스트를 초기화 하겠습니까?", "텍스트 초기화",
+						JOptionPane.YES_NO_OPTION);
+
+				switch (idx) {
+				case JOptionPane.YES_OPTION: {
+					jtfSchEmpno.setText("");
+					jtfEmpno.setText("");
+					jtfName.setText("");
+					jtfJob.setText("");
+					jtfMgr.setText("");
+					jtfHiredate.setText("");
+					jtfSal.setText("");
+					jtfComm.setText("");
+					jtfDeptno.setText("");
+				}
+					break;
+				case JOptionPane.NO_OPTION:
+					break;
+				}// end switch
 			}// actionPerformed
 		});// jbRset.addActionListener
+		JFrame jf = new JFrame("사원 인사정보 수정");
+		JLabel jlblEmpno = new JLabel("사원 번호");
+		JTextField jtfEmpno1 = new JTextField();
+		JLabel jlblSal = new JLabel("연봉");
+		JTextField jtfSal1 = new JTextField();
+		JLabel jlblComm = new JLabel("보너스");
+		JTextField jtfComm1 = new JTextField();
+		// 업데이트
+		jbEmpUp.addActionListener(new ActionListener() {
+			
+			@Override
+			public void actionPerformed(ActionEvent ae) {
+				jf.setLayout(null);
+
+				// 사원번호
+				jf.add(jlblEmpno).setBounds(50, 50, 100, 30);
+				jlblEmpno.setFont(new Font("굴림", Font.BOLD, 20));
+				jf.add(jtfEmpno1).setBounds(150, 50, 120, 30);
+
+				// 사원 연봉
+				jf.add(jlblSal).setBounds(50, 100, 100, 30);
+				jlblSal.setFont(new Font("굴림", Font.BOLD, 20));
+				jf.add(jtfSal1).setBounds(150, 100, 120, 30);
+
+				// 사원 보너스
+				jf.add(jlblComm).setBounds(50, 150, 100, 30);
+				jlblComm.setFont(new Font("굴림", Font.BOLD, 20));
+				jf.add(jtfComm1).setBounds(150, 150, 120, 30);
+
+				jf.add(jbmodify).setBounds(200,230,100,30);
+				
+				jf.setSize(500, 350);
+				jf.setLocationRelativeTo(null);
+				jf.setVisible(true);
+
+			}// actionPerformed
+		});// addActionListener
 		
+		jbmodify.addActionListener(new ActionListener() {
+			
+			@Override
+			public void actionPerformed(ActionEvent e) {
+					if(e.getSource() == jbmodify) {
+						
+					EmpStatementDAO eDAO = EmpStatementDAO.getInstance();
+										
+					
+					try {
+						EmpModifyVO EVO = new EmpModifyVO(Integer.valueOf(jtfSal1.getText()),Integer.valueOf(jtfComm1.getText()));
+						
+						eDAO.UpdateEmp(Integer.valueOf(jtfEmpno1.getText()), EVO);
+					} catch (NumberFormatException e1) {
+						JOptionPane.showMessageDialog(l, "사원번호 / 연봉 / 보너스는 숫자만 입력하실 수 있습니다.\n  확인 후 입력부탁드립니다.");
+						e1.printStackTrace();
+					} catch (SQLException e1) {
+						switch (e1.getErrorCode()) {
+						case 1438: JOptionPane.showMessageDialog(l, "연봉과 보너스는 7자리 내로 입력가능합니다.\n 또는 사원번호는 4자리인지 확인 부탁드립니다.");
+
+						}
+						e1.printStackTrace();
+					}
+												
+					}//end if
+			}//actionPerformed
+		});//addActionListener
+
+
 	}// Login
+	
 
 	class EmpEvt implements ActionListener {
-
+		
 		@Override
 		public void actionPerformed(ActionEvent ae) {
 
@@ -233,7 +312,7 @@ public class Login extends JFrame {
 				int sal = 0;
 				int deptno = 0;
 				try {
-					eAddVo = esDAO.select(empNo);
+					eAddVo = esDAO.selectEmp(empNo);
 
 					if (eAddVo == null) {
 						JOptionPane.showMessageDialog(l, "조회한 사원 정보가 존재하지 않습니다.\n 확인 후 입력해주세요.");
@@ -263,11 +342,10 @@ public class Login extends JFrame {
 			} // end if
 
 		}// actionPerformed
-		
+
 	}// class
 
 	public static void main(String[] args) {
 		new Login();
 	}
-
 }// class
