@@ -105,15 +105,15 @@ public class EmpStatementDAO {
 
 	}// selectEmp
 	
-	public int UpdateEmp(int empno,EmpModifyVO eVO) throws SQLException {
+	public int updateEmp(int empno,EmpModifyVO eVO) throws SQLException {
 		int rowCnt = 0;
 		
 		Connection con = null;
 		PreparedStatement pstmt = null;
 		ResultSet rs = null;
 
-		//1.
-		//2.
+		// 1. 드라이버로딩
+		// 2. Connection 얻기
 		try {
 			con = getConnection();
 		} catch (SQLException e) {
@@ -141,6 +141,7 @@ public class EmpStatementDAO {
 		rowCnt = pstmt.executeUpdate();
 
 		}finally {
+			//6. 연결 끊기
 			if(pstmt != null) {
 				pstmt.close();
 			}//end if
@@ -158,9 +159,74 @@ public class EmpStatementDAO {
 		
 	}//UpdateEmp
 	
+	public int removeEmp(int empno) throws SQLException {
+		int rowCnt = 0;
+		Connection con = null;
+		PreparedStatement pstmt = null;
+		
+		// 1. 드라이버로딩
+		// 2. Connection 얻기
+		try {
+			con = getConnection();
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}//end catch
+		
+		// 3. 쿼리문 생성객체 얻기
+		StringBuilder deleteEmp = new StringBuilder();
+		deleteEmp
+		.append("	DELETE FROM emp	")
+		.append("	WHERE empno = ?	");
+
+		pstmt = con.prepareStatement(deleteEmp.toString());
+
+		// 4. 바인드 변수에 값 넣기
+		pstmt.setInt(1, empno);
+			
+		// 5.쿼리 수행 후결과 얻기
+		rowCnt = pstmt.executeUpdate();
+		
+		return rowCnt;
+		
+	}//deleteEmp
+	
+	// 사원 추가하기
+	public int insertEmp(EmpAddVO eAddVO) throws SQLException {
+		int rowCnt = 0;
+		Connection con = null;
+		PreparedStatement pstmt = null;
+		
+		// 1.드라이버 로딩
+		// 2.커넥션 얻기
+		try {
+			con = getConnection();
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}//end catch
+		
+		// 3.쿼리문 생성객체 얻기
+		String insertEmp = "INSERT INTO emp(empno, ename, job, mgr, hiredate, sal, comm, deptno) VALUES (?,?,?,?,?,?,?,?)";
+		
+		pstmt = con.prepareStatement(insertEmp);
+		
+		//4.바인드 변수에 값 넣기
+		pstmt.setInt(1, eAddVO.getEmpno());
+		pstmt.setString(2, eAddVO.getEname());
+		pstmt.setString(3, eAddVO.getJob());
+		pstmt.setInt(4, eAddVO.getMgr());
+		pstmt.setString(5, eAddVO.getHiredate());
+		pstmt.setInt(6, eAddVO.getSal());
+		pstmt.setInt(7, eAddVO.getComm());
+		pstmt.setInt(8, eAddVO.getDeptno());
+		
+		rowCnt = pstmt.executeUpdate();
+		System.out.println("a");
+		return rowCnt;
+	}//insertEmp
 	
 	public static void main(String[] args) throws SQLException {
-	 EmpStatementDAO.getInstance().UpdateEmp(9999,new EmpModifyVO(47,2));
+	 EmpStatementDAO.getInstance().insertEmp(new EmpAddVO(4,"a","a",1,"1993-07-14",1,1,20));
 	}
 
 }// class
