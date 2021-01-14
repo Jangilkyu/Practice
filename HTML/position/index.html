@@ -1,0 +1,188 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>Insert title here</title>
+<style type="text/css">
+div {
+	padding: 0px;
+	margin: 0px;
+}
+
+body { font-family: "Malgun Gothic","맑은 고딕",sans-serif;}
+li {
+	list-style: none;
+	display: inline-block;
+	margin-left: 30px;
+}
+
+a{
+	text-decoration: none;
+	font-weight: bold;
+	color: black;
+	
+}
+
+#wrap {
+	width: 900px;
+	height: 1000px;
+	margin: 0 auto;
+}
+
+#header {
+	width: inherit;
+	height: 180px;
+	position: relative;
+}
+
+#mainLogo {
+	width: 150px;
+	height: 80px;
+	position: absolute;
+	left: 50px;
+	top: 30px;
+}
+
+#hd_service {
+	width: 570px;
+	height: 80px;
+	border: 1px solid #EEEEEE;
+	position: absolute;
+	left: 300px;
+	top: 20px;
+}
+
+#hd_nav {
+	width: inherit;
+	position: absolute;
+	top: 115px;
+	border-top: 1px solid #EBEBEB;
+	border-bottom: 1px solid #EBEBEB;
+}
+
+/*  main */
+#main {
+	background-color: white;
+	width: inherit;
+	height: 700px;
+	position: relative;
+}
+
+.news{
+	width: 250px;
+	height: 150px;
+	position: absolute;
+	top: 30px;
+	border: 1px solid #EEEEEE;
+}
+
+.news_1 {
+	left: 20px;
+}
+
+.news_2 {
+	left: 290px;
+}
+
+.login {
+	width: 320px;
+	height: 150px;
+	border: 1px solid #EEEEEE;
+	position: absolute;
+	right: 20px;
+	top: 30px;
+}
+
+.ad1 {
+	width: 520px;
+	height: 80px;
+	top: 210px;
+	left: 20px;
+	border: 1px solid #EEEEEE;
+	position: absolute;
+}
+
+.ad2 {
+	width: 320px;
+	height: 410px;
+	border: 1px solid #EEEEEE;
+	position: absolute;
+	right: 20px;
+	top: 210px;
+}
+
+.news3 {
+	width: 520px;
+	height: 300px;
+	border: 1px solid #EEEEEE;
+	position: absolute;
+	top: 320px;
+	left: 20px;
+}
+
+
+
+/*  footer */
+#footer {
+	border-top: 1px solid #EEEEEE;
+	height: 150px;
+	position: relative;
+}
+
+#f_log {
+		border: 1px solid #EEEEEE;
+		display: inline-block;
+		position: absolute;
+		top: 40px;
+		left: 70px;
+}
+
+#com_info {
+		border: 1px solid #EEEEEE;
+		width: 500px;
+		height: 80px;
+		position: absolute;
+		left: 350px;
+		top: 30px;
+}
+
+</style>
+
+</head>
+<body>
+	<div id="wrap">
+		<div id="header">
+			<div id="mainLogo"><a href="#"><img src="http://localhost/html_prj/common/images/sist.jpg"></a></div>
+			<div id="hd_service">hd_service</div>
+			<div id="hd_nav">
+				<ul>
+					<li><a href="#">홈</a></li>
+					<li><a href="#">쇼핑</a></li>
+					<li><a href="#">블로그</a></li>
+					<li><a href="#">카페</a></li>
+					<li><a href="#">메일</a></li>
+					<li><a href="#">사전</a></li>
+					<li><a href="#">책</a></li>
+					<li><a href="#">증권</a></li>
+					<li><a href="#">뉴스</a></li>
+					<li><a href="#">웹툰</a></li>
+					<li><a href="#">지도</a></li>
+				</ul>
+			</div>
+		</div>
+		<div id="main">
+			<div class="news news_1">new1</div>
+			<div class="news news_2">new2</div>
+			<div class="login">login</div>
+			<div class="ad1">ad1</div>
+			<div class="ad2">ad2</div>
+			<div class="news3">new3</div>
+		</div>
+		<div id="footer">
+			<div id="f_log"><img src="http://localhost/html_prj/common/images/sist.jpg"></div>
+			<div id="com_info">com_info</div>
+		</div>
+	</div>
+
+</body>
+</html>

@@ -97,8 +97,8 @@ Java와 Oracle를 JDBC드라이버를 통해 연동하여 PreparedStatement를 �
 
 - **사원 추가**는 **jbEmpAdd**JButton를 **Anonymous Class**로 정의하였습니다.
 ```java
-					@Override
-					public void actionPerformed(ActionEvent ae) {
+    @Override
+    public void actionPerformed(ActionEvent ae) {
 						int rowCnt = 0;
 						if (ae.getSource() == jbAdd) {
 
@@ -133,11 +133,11 @@ Java와 Oracle를 JDBC드라이버를 통해 연동하여 PreparedStatement를 �
 									JOptionPane.showMessageDialog(l, ename +"사원이 정상적으로 추가되었습니다.");
 								}
 								
-							}catch(SQLException se) {
-								switch(se.getErrorCode()) {
-								case 1840 : JOptionPane.showMessageDialog(l, "입력된 값의 길이가 날짜 형식에 비해 부족합니다");
-								}
-							}
-						}//end if
-					}//actionPerformed
+					}catch(SQLException se) {
+				switch(se.getErrorCode()) {
+                    case 1840 : JOptionPane.showMessageDialog(l, "입력된 값의 길이가 날짜 형식에 비해 부족합니다");
+				}
+			}
+		}//end if
+    }//actionPerformed
 ```
