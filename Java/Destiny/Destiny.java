@@ -1,7 +1,5 @@
 import java.util.StringTokenizer;
 
-import org.w3c.dom.UserDataHandler;
-
 public class Destiny {
 
 	String a = "";
@@ -36,7 +34,6 @@ public class Destiny {
 		// userDate[2] 일
 		// userDate[3] 시
 		// userDate[4] 분
-
 		getZodiac(userDate[0]);
 		getYear();
 		getMonth();
@@ -119,7 +116,7 @@ public class Destiny {
 		destinyInfo[11][1] = "천명";
 	}// init
 
-	// ============== 주요 기능 =====================
+	// =================================== 주요 기능 ==========================================
 	/**
 	 * 
 	 */
@@ -162,7 +159,6 @@ public class Destiny {
 //			System.out.println("생일: " + sajuInfo[dayCycle][1]);
 			result[2]= destinyInfo[dayCycle][1];
 			timeCycle = dayCycle++;
-			System.out.println("timecycle" + timeCycle);
 		} // end for
 	}// getDay
 
@@ -230,15 +226,24 @@ public class Destiny {
 	}// chkHour
 
 	public void getTime(String zodiac) {
-		int get = timeCycle;
-		System.out.println("get" + get);
-		for (int i = 0; i < timeCycle; i++) {
-			if (dayCycle >= 12) {
-				dayCycle = 0;
+		int cnt = 0;
+		for(int i = 0; i < destinyInfo.length; i++) {
+			if(!zodiac.equals(destinyInfo[i][0])) {
+				++cnt;
+			}//end if
+		}
+		
+		for (int i = 0; i < cnt; i++) {
+			if (timeCycle >= 12) {
+				timeCycle = 0;
 			} // end if
-				result[3]= destinyInfo[dayCycle][1];
-				dayCycle++;
-		} // end for
+			
+			if(zodiac.equals(destinyInfo[i][0])) {
+				result[3]= destinyInfo[timeCycle][1];
+			}//end if
+			timeCycle++;
+		} // end for		
+	
 	}// getTime
 	
 	public void result() {
