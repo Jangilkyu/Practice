@@ -1,23 +1,29 @@
+package com.User.Destiny;
+
 import java.util.StringTokenizer;
 
 public class Destiny {
 
-	String a = "";
+	String date = "";
 	int userDate[];
 	StringTokenizer stk;
 	String zodiac;
 	String destinyInfo[][];
 	String result[];
-
-	public Destiny() {
+	String zodiac1;
+	int monthCycle;
+	int dayCycle;
+	int timeCycle;
+	
+	public Destiny(String date) {
 		userDate = new int[5];
 		destinyInfo = new String[12][2];
 		result = new String[4];
 		
-		a = "2021-07-06T12:00";
+		this.date = date;
 		
 		init();
-		stk = new StringTokenizer(a, "-T:", false);
+		stk = new StringTokenizer(date, "-T:", false);
 		
 		int idx = 0;
 		while (stk.hasMoreTokens()) {
@@ -25,10 +31,6 @@ public class Destiny {
 			idx++;
 		} // end while
 
-		for(int s : userDate) {
-			System.out.println(s);
-		}
-		
 		// userDate[0] 생년
 		// userDate[1] 월
 		// userDate[2] 일
@@ -39,7 +41,6 @@ public class Destiny {
 		getMonth();
 		getDay();
 		chkHour(userDate[3], userDate[4]);
-		result();
 
 	}// Destiny
 
@@ -120,8 +121,7 @@ public class Destiny {
 	/**
 	 * 
 	 */
-	int monthCycle;
-	int dayCycle;
+
 
 	public void getYear() {
 
@@ -148,9 +148,7 @@ public class Destiny {
 			dayCycle = monthCycle++;
 		} // end for
 	}// getMonth
-
-	int timeCycle = 0;
-
+	
 	public void getDay() {
 		for (int i = 0; i < userDate[2]; i++) {
 			if (dayCycle >= 12) {
@@ -162,7 +160,6 @@ public class Destiny {
 		} // end for
 	}// getDay
 
-	String zodiac1;
 
 	public void chktime(int month) {
 		switch (month) {
@@ -246,14 +243,16 @@ public class Destiny {
 	
 	}// getTime
 	
-	public void result() {
-		for(String r : result) {
-			System.out.println(r);
-		}//end for
-	}//end if
-
-	public static void main(String[] args) {
-		Destiny a = new Destiny();
-
-	}// main
+	public String[] getResult(){
+		return result;
+	}
+	
+	public String getZodiac() {
+		return zodiac;
+	}
+	
+	public int[] getUserDate() {
+		return userDate;
+	}
+	
 }// class
