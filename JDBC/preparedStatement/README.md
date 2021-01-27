@@ -4,15 +4,23 @@
 
 Java와 Oracle를 JDBC드라이버를 통해 연동하여 PreparedStatement를 사용해 쿼리를 실행 회원조회 CRUD를 만들어보았습니다.
 
-## 메인 화면 
+<img src = "https://user-images.githubusercontent.com/69107255/106006862-04e26080-60f9-11eb-99a6-4cc891c54148.png">
+
+현재 `emp테이블`에는 14명에 사원에 정보가 저장이 되어 있고, 해당 테이블에 값을 `추가`,`수정`,`삭제`,`조회`기능이 있는 프로그램을 **jdbc**와 **swing**을 활용해 제작하게 되었습니다.
+
+<hr>
+
+## **메인 화면** 
 <img src ="https://user-images.githubusercontent.com/69107255/103910824-a0129680-5148-11eb-9ae6-a2807d0e77a8.png">
 
 - emp테이블에 사원번호를 통하여 `사원번호`,`직원명`,`부서명`,`매니저번호`,`입사일자`,`연봉`,`보너스`,`부서번호`를 조회할 수 있습니다.
 
-## 조회
+<hr>
+
+## **조회**
 <img src = "https://user-images.githubusercontent.com/69107255/103911141-04355a80-5149-11eb-9073-893becdc29b5.png">
 
-- 사원번호를 입력 후 조회를 해보았습니다.
+- **7369번**의 **사원번호**를 입력 후 **검색**버튼을 클릭하여 조회를 해보았습니다.
 
 - `EmpView.java`에 Inner class인 `EmpEvtclass`에 ActionEvent의 코드 일부분을 가져왔습니다.
 ```java
@@ -54,9 +62,8 @@ Java와 Oracle를 JDBC드라이버를 통해 연동하여 PreparedStatement를 �
 			} // end if
 		}// actionPerformed
 ```
-- 사용자가 입력한 `사원번호`를 `String empNo = jtfSchEmpno.getText();`로 사원번호을 받은 뒤 EmpStatementDAO클래스의 selectEmp(empNo)로 전달하였습니다.
+사용자가 입력한 `사원번호`를 `String empNo = jtfSchEmpno.getText();`로 사원번호을 받은 뒤 EmpStatementDAO클래스의 selectEmp(empNo)로 전달하였습니다.
 
-<br>
 <br>
 
 ```java
@@ -92,10 +99,11 @@ Java와 Oracle를 JDBC드라이버를 통해 연동하여 PreparedStatement를 �
 
 ## 삽입
 
-- 메인화면 하단에 있는 사원 번호를 클릭하면 아래 이미지와 같은 JFrame창이 나옵니다.
+- 메인화면 하단에 있는 **사원 추가** 버튼을 클릭하게 되면 아래 이미지와 같은 JFrame창이 나옵니다.
+
 <img src = "https://user-images.githubusercontent.com/69107255/103914906-d30b5900-514d-11eb-91cd-889238bfe5df.png">
 
-- **사원 추가**는 **jbEmpAdd**JButton를 **Anonymous Class**로 정의하였습니다.
+- **사원 추가**는 **jbEmpAddJButton**를 **Anonymous Class**로 정의하였습니다.
 ```java
     @Override
     public void actionPerformed(ActionEvent ae) {
@@ -141,3 +149,29 @@ Java와 Oracle를 JDBC드라이버를 통해 연동하여 PreparedStatement를 �
 		}//end if
     }//actionPerformed
 ```
+
+```java
+		// 3.쿼리문 생성객체 얻기
+		String insertEmp = "INSERT INTO emp(empno, ename, job, mgr, hiredate, sal, comm, deptno) VALUES (?,?,?,?,?,?,?,?)";
+		
+		pstmt = con.prepareStatement(insertEmp);
+		
+		//4.바인드 변수에 값 넣기
+		pstmt.setInt(1, eAddVO.getEmpno());
+		pstmt.setString(2, eAddVO.getEname());
+		pstmt.setString(3, eAddVO.getJob());
+		pstmt.setInt(4, eAddVO.getMgr());
+		pstmt.setString(5, eAddVO.getHiredate());
+		pstmt.setInt(6, eAddVO.getSal());
+		pstmt.setInt(7, eAddVO.getComm());
+		pstmt.setInt(8, eAddVO.getDeptno());
+		
+		rowCnt = pstmt.executeUpdate();
+		return rowCnt;
+```
+
+쿼리문 생성객체를 얻어서 각 바인드 변수에 대입을 하고 정상적으로 값이 추가가 되었다면 rowCnt에 0이 아닌값이 담기게 되고 리턴합니다.
+
+<img src ="https://user-images.githubusercontent.com/69107255/106008260-74a51b00-60fa-11eb-9a58-aca3bfa940fd.png">
+
+input창에 값들을 넣고 **사원추가** 버튼을 클릭 하면 
