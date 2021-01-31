@@ -141,3 +141,7 @@ viewMemberList 함수에서는 파라미터로 받은 회원 정보들을 *<tbod
 		})
 	});
 ```
+
+아이디가 `Jang`인 회원을 클릭하고 삭제가 이루어진 것을 확인 할 수 있습니다.
+
+<img src = "https://user-images.githubusercontent.com/69107255/106386399-248ac900-6418-11eb-89e5-151ddd413eb0.png">
